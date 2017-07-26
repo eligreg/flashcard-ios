@@ -1,0 +1,26 @@
+PODS:
+  - Alamofire (4.5.0)
+  - Gloss (1.2.4)
+  - sqlite3 (3.19.3):
+    - sqlite3/common (= 3.19.3)
+  - sqlite3/common (3.19.3)
+  - SwiftyDB (1.1.3):
+    - TinySQLite (~> 0.3.0)
+  - TinySQLite (0.3.1):
+    - sqlite3
+
+DEPENDENCIES:
+  - Alamofire
+  - Gloss
+  - SwiftyDB
+
+SPEC CHECKSUMS:
+  Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
+  Gloss: 4e036074610fdb993abcb958ebcd7332588e2333
+  sqlite3: e0f7755dc52e709215e116c801ea0c81fd45c083
+  SwiftyDB: b4a52b0a0ce8008aaba02290ae1d15c7f9be2d8a
+  TinySQLite: b27a26c4676a41f045f56e0d94ccc4bce9a1a87f
+
+PODFILE CHECKSUM: 667567f98623e72d19a31740fcfee674114152f9
+
+COCOAPODS: 1.2.0

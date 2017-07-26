@@ -1,0 +1,14 @@
+source 'https://github.com/CocoaPods/Specs.git'
+# platform :ios, "9.0"
+
+["Flashcard", "FlashcardTests"].each do | env |
+    target env do
+        
+        pod 'Alamofire'
+        pod 'Gloss'
+        pod 'SwiftyDB'
+        
+        use_frameworks!
+    end
+end
+

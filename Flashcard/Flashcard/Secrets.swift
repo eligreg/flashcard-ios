@@ -1,5 +1,5 @@
 //
-//  Token.swift
+//  Secrets.swift
 //  Flashcard
 //
 //  Created by Eli Gregory on 8/13/17.
@@ -9,11 +9,11 @@
 import Foundation
 import Gloss
 
-class Token {
+class Secrets {
     
     static let requestToken: String? = {
         
-        guard let path = Bundle.main.path(forResource: "token", ofType: "json") else {
+        guard let path = Bundle.main.path(forResource: "secrets", ofType: "json") else {
             return nil
         }
         

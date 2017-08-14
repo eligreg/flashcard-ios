@@ -58,7 +58,7 @@ public enum Routes: URLRequestConvertible {
         return [
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "X-Token": Token.requestToken ?? "failed_token"
+            "X-Token": Secrets.requestToken ?? "failed_token"
         ]
     }
     

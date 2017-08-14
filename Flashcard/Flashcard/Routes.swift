@@ -55,7 +55,11 @@ public enum Routes: URLRequestConvertible {
     }
     
     var headers: HTTPHeaders {
-        return ["Content-Type": "application/json", "Accept": "application/json"]
+        return [
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "X-Token": Token.requestToken
+        ]
     }
     
     var body: Data? {

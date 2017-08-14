@@ -53,7 +53,7 @@ class NewDeckFormController: FormViewController {
                         self.navigationController?.popViewController(animated: true)
                     }
                     .onError { err in
-                        self.present(alert: err.userErrorMessage)
+                        StatusBar.display(message: err.userErrorMessage)
                     }
                     .finally {
                         PKHUD.sharedHUD.hide()

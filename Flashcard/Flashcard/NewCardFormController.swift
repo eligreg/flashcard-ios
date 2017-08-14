@@ -64,10 +64,11 @@ class NewCardFormController: FormViewController {
                         PKHUD.sharedHUD.hide()
                     }
                     .onError { err in
-                        self.present(alert: err.userErrorMessage)
+                        StatusBar.display(message: err.userErrorMessage)
                     }
                     .finally {
                         self.dismiss(animated: true, completion: nil)
+                        PKHUD.sharedHUD.hide()
                     }
             })
         }

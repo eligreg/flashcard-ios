@@ -7,6 +7,18 @@
 //
 
 import Foundation
+import BPStatusBarAlert
+
+class StatusBar {
+    
+    static func display(message: String?) {
+        BPStatusBarAlert(duration: 2.0, delay: 0.4, position: .statusBar)
+            .message(message: message ?? "Unknown Error!")
+            .messageColor(color: .white)
+            .bgColor(color: .red)
+            .show()
+    }
+}
 
 struct FlashcardError {
     static let domain: String = "com.achimllc.flashcard"

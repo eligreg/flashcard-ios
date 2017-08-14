@@ -34,17 +34,23 @@ class Session {
         }
     }
     
-    // MARK: Restoring a Session
+    // MARK: Restoring a Session or forcing a push
     
-    static var isRestored: Bool {
+    static var shouldPushDeck: Bool {
         get {
-            let r = restored
-            restored = false
+            let r = push
+            push = false
             return r
         }
     }
     
-    fileprivate static var restored: Bool = false
+    static func pushDeck() {
+        if deck != nil {
+            push = true
+        }
+    }
+    
+    internal static var push: Bool = false
     
     // MARK: Injecting a False Top Card
     
@@ -79,7 +85,7 @@ class Session {
         shared.sessionDeckID = deckId
         
         if deck != nil {
-            restored = true
+            push = true
         }
         else {
             save()

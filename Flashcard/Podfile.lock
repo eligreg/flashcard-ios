@@ -1,10 +1,9 @@
 PODS:
   - Alamofire (4.5.0)
+  - BPStatusBarAlert (0.1.4)
   - Eureka (3.1.0)
   - FileKit (4.0.1)
   - Gloss (1.2.4)
-  - Morgan (0.10.0):
-    - Walker
   - PKHUD (4.2.3)
   - Realm (2.9.1):
     - Realm/Headers (= 2.9.1)
@@ -13,14 +12,13 @@ PODS:
     - Realm (= 2.9.1)
   - SwiftyTimer (2.0.0)
   - thenPromise (2.2.3)
-  - Walker (0.10.0)
 
 DEPENDENCIES:
   - Alamofire
+  - BPStatusBarAlert
   - Eureka
   - FileKit
   - Gloss
-  - Morgan
   - PKHUD (~> 4.0)
   - RealmSwift
   - SwiftyTimer
@@ -28,17 +26,16 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
+  BPStatusBarAlert: 400badfd78f16362bc29990be3e8bbfc1c22a50f
   Eureka: d6725c38d0dcdceaa331d1468f75e76315715ae0
   FileKit: 1ea916f594bc0bb9a3951f80edf92b52bb7f883c
   Gloss: 4e036074610fdb993abcb958ebcd7332588e2333
-  Morgan: 464bd2d2ef11c89db0327e22c37b51906b1e4e4a
   PKHUD: c7692163a09875cbf15827dc581df3c5cf7f1015
   Realm: f91fb43bd474c4f731a116ebf7392c75dd015920
   RealmSwift: 207f12a4a36b696c5183c60a1c06d70234a23e56
   SwiftyTimer: 2efd74b060d69ad4f1496baf5bbedbe132125fcf
   thenPromise: c6c356db4a6d5865be4668bdb7657233d9d843c0
-  Walker: f81f549bd2742ab15a6f0dc51e070f85cd8df4f1
 
-PODFILE CHECKSUM: 2fe744fe234a7a8650b656296810fbcf95b54ca3
+PODFILE CHECKSUM: 929a18f04c88dda2a2d30149624dc00bb4c7bff7
 
 COCOAPODS: 1.2.0

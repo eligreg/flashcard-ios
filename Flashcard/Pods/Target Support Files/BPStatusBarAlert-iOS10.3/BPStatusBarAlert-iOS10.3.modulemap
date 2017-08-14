@@ -1,0 +1,6 @@
+framework module BPStatusBarAlert {
+  umbrella header "BPStatusBarAlert-iOS10.3-umbrella.h"
+
+  export *
+  module * { export * }
+}

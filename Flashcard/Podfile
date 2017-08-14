@@ -11,8 +11,8 @@ source 'https://github.com/CocoaPods/Specs.git'
         pod 'PKHUD', '~> 4.0'
         pod 'Eureka'
         pod 'RealmSwift'
-        pod 'Morgan'
         pod 'SwiftyTimer'
+        pod 'BPStatusBarAlert'
         
         use_frameworks!
     end

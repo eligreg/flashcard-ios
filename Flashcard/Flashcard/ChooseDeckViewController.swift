@@ -26,11 +26,12 @@ class ChooseDeckViewController: UITableViewController {
             .then { (decks: [Deck]) in
                 self.decks = decks
                 self.tableView.reloadData()
-                PKHUD.sharedHUD.hide()
             }
             .onError { err in
+                StatusBar.display(message: err.userErrorMessage)
+            }
+            .finally {
                 PKHUD.sharedHUD.hide()
-                HUD.flash(HUDContentType.labeledError(title: err.userErrorMessage, subtitle: nil))
         }
     }
     
@@ -38,6 +39,7 @@ class ChooseDeckViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         Session.deck = decks?[indexPath.row]
+        Session.pushDeck()
         self.navigationController?.popViewController(animated: true)
     }
     

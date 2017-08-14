@@ -10,12 +10,10 @@ import UIKit
 import then
 import PKHUD
 import RealmSwift
-import Morgan
 
 class DeckViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var deckLabel: UILabel!
-    @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var frontLabel: UILabel!
     @IBOutlet weak var backLabel: UILabel!
     @IBOutlet weak var newButton: UIButton!
@@ -66,7 +64,7 @@ class DeckViewController: UIViewController, UIGestureRecognizerDelegate {
                 else {
                     msg = "\(err.localizedDescription)"
                 }
-                self.deliver(errorMessage: msg)
+                StatusBar.display(message: msg)
             }
             .finally {
                 self.shuffledDeck?.shuffle()
@@ -78,11 +76,6 @@ class DeckViewController: UIViewController, UIGestureRecognizerDelegate {
         super.viewWillAppear(animated)
         
         self.update()
-    }
-    
-    func deliver(errorMessage message: String?) {
-        self.errorLabel.text = message
-        self.errorLabel.shake()
     }
     
     func swipe(_ sender: UISwipeGestureRecognizer) {
@@ -123,7 +116,7 @@ class DeckViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     func update() {
-        let card = self.shuffledDeck?.top
+        weak var card = self.shuffledDeck?.top
         frontLabel.text = card != nil ? card!.front : ""
         backLabel.text = card != nil ? card!.back  : ""
         deckLabel.text = shuffledDeck?.deck != nil ? shuffledDeck!.status : "(No Deck Selected)"

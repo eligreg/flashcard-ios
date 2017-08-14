@@ -1,6 +1,0 @@
-framework module Walker {
-  umbrella header "Walker-iOS10.3-umbrella.h"
-
-  export *
-  module * { export * }
-}

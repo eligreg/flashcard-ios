@@ -29,7 +29,7 @@ class RootTableViewController: UITableViewController {
         var header: String {
             switch self {
             case .deckActivity:
-                return "Deck"
+                return Session.deck != nil ? "(\(Session.deck!.name))" : "Deck"
             case .nudges:
                 return "Nudges"
             }
@@ -47,7 +47,7 @@ class RootTableViewController: UITableViewController {
         
         self.tableView.reloadData()
         
-        if Session.isRestored {
+        if Session.shouldPushDeck {
             self.performSegue(withIdentifier: "rootTableToDeckView", sender: self)
         }
     }
@@ -90,13 +90,6 @@ class RootTableViewController: UITableViewController {
     
     override func tableView(_ tableView:UITableView, titleForHeaderInSection section: Int) -> String? {
         return Index(rawValue: section)?.header ?? ""
-    }
-    
-    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        guard section == 0 else {
-            return nil
-        }
-        return Session.deck != nil ? "CURRENT DECK: \(Session.deck!.name)" : "(NO DECK SELECTED)"
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

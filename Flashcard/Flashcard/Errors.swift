@@ -32,6 +32,27 @@ struct FlashcardError {
                                   "meta": "Response is invalid JSON"])
     }()
     
+    static let invalidSecretsError: NSError = {
+        return NSError(domain: domain,
+                       code: 102,
+                       userInfo: ["message": "Couldn't load Secrets Document.",
+                                  "meta": "Response is invalid JSON"])
+    }()
+    
+    static let invalidSecretsTokenError: NSError = {
+        return NSError(domain: domain,
+                       code: 103,
+                       userInfo: ["message": "Couldn't load Secrets Request Token.",
+                                  "meta": "Response is invalid JSON"])
+    }()
+    
+    static let invalidSecretsBaseURLError: NSError = {
+        return NSError(domain: domain,
+                       code: 104,
+                       userInfo: ["message": "Couldn't load Secrets Base URL.",
+                                  "meta": "Response is invalid JSON"])
+    }()
+    
     // MARK: Deck Errors, 200s
     
     static let deckJSONDecodeError: NSError = {

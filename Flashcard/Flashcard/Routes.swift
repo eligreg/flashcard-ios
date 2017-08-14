@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 public struct API {
-    static let base: String = "http://localhost:8080/"
+    static let base: String = Secrets.baseURL
 }
 
 public enum Routes: URLRequestConvertible {

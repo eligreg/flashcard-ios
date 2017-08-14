@@ -1,6 +1,0 @@
-framework module SwiftyDB {
-  umbrella header "SwiftyDB-iOS10.3-umbrella.h"
-
-  export *
-  module * { export * }
-}

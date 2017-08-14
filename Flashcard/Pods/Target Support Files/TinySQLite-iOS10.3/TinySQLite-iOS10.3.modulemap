@@ -1,6 +1,0 @@
-framework module TinySQLite {
-  umbrella header "TinySQLite-iOS10.3-umbrella.h"
-
-  export *
-  module * { export * }
-}

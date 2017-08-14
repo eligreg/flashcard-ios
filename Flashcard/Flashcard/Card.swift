@@ -8,25 +8,29 @@
 
 import Foundation
 import Gloss
+import RealmSwift
 
-struct Card: Decodable {
+class Card: Object, Decodable {
     
-    let id: Int
-    let front: String
-    let back: String
-    
-    init(id: Int, front: String, back: String) {
-        self.id = id
-        self.front = front
-        self.back = back
+    struct keys {
+        static let id = "id"
+        static let front = "front"
+        static let back = "back"
+        static let deck_id = "deck_id"
     }
     
-    init?(json: JSON) {
+    dynamic var id: Int = 0
+    dynamic var front: String = ""
+    dynamic var back: String = ""
+    
+    required convenience init?(json: JSON) {
+        
+        self.init()
         
         guard
-            let id: Int = "id" <~~ json,
-            let front: String = "front" <~~ json,
-            let back: String = "back" <~~ json
+            let id: Int = keys.id <~~ json,
+            let front: String = keys.front <~~ json,
+            let back: String = keys.back <~~ json
             
             else {
                 return nil
@@ -36,20 +40,9 @@ struct Card: Decodable {
         self.front = front
         self.back = back
     }
-}
-
-
-// MARK: Fake Networking
-
-extension Card {
     
-    static func fakeCards(n: Int) -> [Card] {
-        var cards = [Card]()
-
-        for i in (0..<n) {
-            cards.append( Card(id: i, front: "Front (\(i+1))", back: "Back (\(i+1))") )
-        }
-        
-        return cards
+    override class func primaryKey() -> String? {
+        return keys.id
     }
 }
+

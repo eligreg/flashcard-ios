@@ -1,0 +1,6 @@
+framework module then {
+  umbrella header "thenPromise-iOS10.3-umbrella.h"
+
+  export *
+  module * { export * }
+}

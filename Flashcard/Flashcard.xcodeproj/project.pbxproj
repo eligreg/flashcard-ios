@@ -7,12 +7,45 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		45209F141F315E4200859AF6 /* Realm+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45209F131F315E4200859AF6 /* Realm+Extensions.swift */; };
+		45209F151F315E4200859AF6 /* Realm+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45209F131F315E4200859AF6 /* Realm+Extensions.swift */; };
+		45209F171F38D75F00859AF6 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45209F161F38D75F00859AF6 /* UIViewController+Extensions.swift */; };
+		45209F181F38D75F00859AF6 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45209F161F38D75F00859AF6 /* UIViewController+Extensions.swift */; };
+		45209F1D1F3A3C3100859AF6 /* ShuffledDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45209F1C1F3A3C3100859AF6 /* ShuffledDeck.swift */; };
+		45209F1E1F3A3C3100859AF6 /* ShuffledDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45209F1C1F3A3C3100859AF6 /* ShuffledDeck.swift */; };
+		45209F201F3E2D3500859AF6 /* Coffee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45209F1F1F3E2D3500859AF6 /* Coffee.swift */; };
+		45209F211F3E2D3500859AF6 /* Coffee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45209F1F1F3E2D3500859AF6 /* Coffee.swift */; };
+		45209F241F3E34FD00859AF6 /* Deck+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45209F231F3E34FD00859AF6 /* Deck+Data.swift */; };
+		45209F251F3E34FD00859AF6 /* Deck+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45209F231F3E34FD00859AF6 /* Deck+Data.swift */; };
+		45209F281F3E353300859AF6 /* Card+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45209F271F3E353300859AF6 /* Card+Data.swift */; };
+		45209F291F3E353300859AF6 /* Card+Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45209F271F3E353300859AF6 /* Card+Data.swift */; };
+		453D53531F2BC1890045AACD /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453D53521F2BC1890045AACD /* Errors.swift */; };
+		453D53541F2BC1890045AACD /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453D53521F2BC1890045AACD /* Errors.swift */; };
 		45BAEC7D1F20583B0055B0EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BAEC7C1F20583B0055B0EE /* AppDelegate.swift */; };
-		45BAEC7F1F20583B0055B0EE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BAEC7E1F20583B0055B0EE /* ViewController.swift */; };
+		45BAEC7F1F20583B0055B0EE /* DeckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BAEC7E1F20583B0055B0EE /* DeckViewController.swift */; };
 		45BAEC821F20583B0055B0EE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45BAEC801F20583B0055B0EE /* Main.storyboard */; };
 		45BAEC841F20583B0055B0EE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45BAEC831F20583B0055B0EE /* Assets.xcassets */; };
 		45BAEC871F20583B0055B0EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45BAEC851F20583B0055B0EE /* LaunchScreen.storyboard */; };
 		45BAEC921F20583B0055B0EE /* FlashcardTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BAEC911F20583B0055B0EE /* FlashcardTests.swift */; };
+		45BC40681F2CDF060045D07C /* JSON+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC40671F2CDF060045D07C /* JSON+Extensions.swift */; };
+		45BC40691F2CDF060045D07C /* JSON+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC40671F2CDF060045D07C /* JSON+Extensions.swift */; };
+		45BC406B1F2CE0290045D07C /* Alamofire+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC406A1F2CE0290045D07C /* Alamofire+Extensions.swift */; };
+		45BC406C1F2CE0290045D07C /* Alamofire+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC406A1F2CE0290045D07C /* Alamofire+Extensions.swift */; };
+		45BC406E1F2CE3610045D07C /* NSError+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC406D1F2CE3610045D07C /* NSError+Extensions.swift */; };
+		45BC406F1F2CE3610045D07C /* NSError+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC406D1F2CE3610045D07C /* NSError+Extensions.swift */; };
+		45BC40711F2CF2DD0045D07C /* RootTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC40701F2CF2DD0045D07C /* RootTableViewController.swift */; };
+		45BC40721F2CF2DD0045D07C /* RootTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC40701F2CF2DD0045D07C /* RootTableViewController.swift */; };
+		45BC40741F2E49F40045D07C /* ChooseDeckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC40731F2E49F40045D07C /* ChooseDeckViewController.swift */; };
+		45BC40751F2E49F40045D07C /* ChooseDeckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC40731F2E49F40045D07C /* ChooseDeckViewController.swift */; };
+		45BC40771F2E5B650045D07C /* NewDeckFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC40761F2E5B650045D07C /* NewDeckFormController.swift */; };
+		45BC40781F2E5B650045D07C /* NewDeckFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC40761F2E5B650045D07C /* NewDeckFormController.swift */; };
+		45BC407A1F2FE1DB0045D07C /* Nudge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC40791F2FE1DB0045D07C /* Nudge.swift */; };
+		45BC407B1F2FE1DB0045D07C /* Nudge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC40791F2FE1DB0045D07C /* Nudge.swift */; };
+		45BC407D1F2FEC210045D07C /* NudgeTimeEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC407C1F2FEC210045D07C /* NudgeTimeEditViewController.swift */; };
+		45BC407E1F2FEC210045D07C /* NudgeTimeEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC407C1F2FEC210045D07C /* NudgeTimeEditViewController.swift */; };
+		45BC407F1F2FFFA40045D07C /* DeckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BAEC7E1F20583B0055B0EE /* DeckViewController.swift */; };
+		45BC40811F3002670045D07C /* NewCardFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC40801F3002670045D07C /* NewCardFormController.swift */; };
+		45BC40821F3002670045D07C /* NewCardFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BC40801F3002670045D07C /* NewCardFormController.swift */; };
 		45E8162A1F25251A0088416F /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E816291F25251A0088416F /* Deck.swift */; };
 		45E8162B1F25251A0088416F /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E816291F25251A0088416F /* Deck.swift */; };
 		45E8162D1F2525230088416F /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E8162C1F2525230088416F /* Card.swift */; };
@@ -38,9 +71,16 @@
 /* Begin PBXFileReference section */
 		2E28AB1634D71336BAF914D6 /* Pods_Flashcard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Flashcard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		431D88863FF15FCB43E2E4A6 /* Pods-FlashcardTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FlashcardTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FlashcardTests/Pods-FlashcardTests.debug.xcconfig"; sourceTree = "<group>"; };
+		45209F131F315E4200859AF6 /* Realm+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Realm+Extensions.swift"; sourceTree = "<group>"; };
+		45209F161F38D75F00859AF6 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
+		45209F1C1F3A3C3100859AF6 /* ShuffledDeck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShuffledDeck.swift; sourceTree = "<group>"; };
+		45209F1F1F3E2D3500859AF6 /* Coffee.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coffee.swift; sourceTree = "<group>"; };
+		45209F231F3E34FD00859AF6 /* Deck+Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Deck+Data.swift"; sourceTree = "<group>"; };
+		45209F271F3E353300859AF6 /* Card+Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Card+Data.swift"; sourceTree = "<group>"; };
+		453D53521F2BC1890045AACD /* Errors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		45BAEC791F20583B0055B0EE /* Flashcard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flashcard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		45BAEC7C1F20583B0055B0EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		45BAEC7E1F20583B0055B0EE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		45BAEC7E1F20583B0055B0EE /* DeckViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckViewController.swift; sourceTree = "<group>"; };
 		45BAEC811F20583B0055B0EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		45BAEC831F20583B0055B0EE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		45BAEC861F20583B0055B0EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -48,6 +88,15 @@
 		45BAEC8D1F20583B0055B0EE /* FlashcardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlashcardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		45BAEC911F20583B0055B0EE /* FlashcardTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlashcardTests.swift; sourceTree = "<group>"; };
 		45BAEC931F20583B0055B0EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		45BC40671F2CDF060045D07C /* JSON+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSON+Extensions.swift"; sourceTree = "<group>"; };
+		45BC406A1F2CE0290045D07C /* Alamofire+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Alamofire+Extensions.swift"; sourceTree = "<group>"; };
+		45BC406D1F2CE3610045D07C /* NSError+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSError+Extensions.swift"; sourceTree = "<group>"; };
+		45BC40701F2CF2DD0045D07C /* RootTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootTableViewController.swift; sourceTree = "<group>"; };
+		45BC40731F2E49F40045D07C /* ChooseDeckViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseDeckViewController.swift; sourceTree = "<group>"; };
+		45BC40761F2E5B650045D07C /* NewDeckFormController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDeckFormController.swift; sourceTree = "<group>"; };
+		45BC40791F2FE1DB0045D07C /* Nudge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Nudge.swift; sourceTree = "<group>"; };
+		45BC407C1F2FEC210045D07C /* NudgeTimeEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NudgeTimeEditViewController.swift; sourceTree = "<group>"; };
+		45BC40801F3002670045D07C /* NewCardFormController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewCardFormController.swift; sourceTree = "<group>"; };
 		45E816291F25251A0088416F /* Deck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
 		45E8162C1F2525230088416F /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		45E816311F252A7C0088416F /* Routes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
@@ -78,6 +127,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		45209F221F3E34EC00859AF6 /* Deck */ = {
+			isa = PBXGroup;
+			children = (
+				45E816291F25251A0088416F /* Deck.swift */,
+				45209F231F3E34FD00859AF6 /* Deck+Data.swift */,
+			);
+			name = Deck;
+			sourceTree = "<group>";
+		};
+		45209F261F3E352400859AF6 /* Card */ = {
+			isa = PBXGroup;
+			children = (
+				45E8162C1F2525230088416F /* Card.swift */,
+				45209F271F3E353300859AF6 /* Card+Data.swift */,
+			);
+			name = Card;
+			sourceTree = "<group>";
+		};
+		45209F2A1F40EC5B00859AF6 /* Nudge */ = {
+			isa = PBXGroup;
+			children = (
+				45BC40791F2FE1DB0045D07C /* Nudge.swift */,
+			);
+			name = Nudge;
+			sourceTree = "<group>";
+		};
 		45BAEC701F20583B0055B0EE = {
 			isa = PBXGroup;
 			children = (
@@ -101,15 +176,22 @@
 		45BAEC7B1F20583B0055B0EE /* Flashcard */ = {
 			isa = PBXGroup;
 			children = (
+				45BC40661F2CDEF90045D07C /* Extensions */,
 				45E816301F252A700088416F /* Networking */,
 				45E816281F2525060088416F /* Models */,
 				45BAEC7C1F20583B0055B0EE /* AppDelegate.swift */,
-				45BAEC7E1F20583B0055B0EE /* ViewController.swift */,
+				45E816341F2535470088416F /* Session.swift */,
+				45209F1C1F3A3C3100859AF6 /* ShuffledDeck.swift */,
+				45BC40701F2CF2DD0045D07C /* RootTableViewController.swift */,
+				45BC40731F2E49F40045D07C /* ChooseDeckViewController.swift */,
+				45BC407C1F2FEC210045D07C /* NudgeTimeEditViewController.swift */,
+				45BC40761F2E5B650045D07C /* NewDeckFormController.swift */,
+				45BC40801F3002670045D07C /* NewCardFormController.swift */,
+				45BAEC7E1F20583B0055B0EE /* DeckViewController.swift */,
 				45BAEC801F20583B0055B0EE /* Main.storyboard */,
 				45BAEC831F20583B0055B0EE /* Assets.xcassets */,
 				45BAEC851F20583B0055B0EE /* LaunchScreen.storyboard */,
 				45BAEC881F20583B0055B0EE /* Info.plist */,
-				45E816341F2535470088416F /* Session.swift */,
 			);
 			path = Flashcard;
 			sourceTree = "<group>";
@@ -123,11 +205,24 @@
 			path = FlashcardTests;
 			sourceTree = "<group>";
 		};
+		45BC40661F2CDEF90045D07C /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				45BC40671F2CDF060045D07C /* JSON+Extensions.swift */,
+				45BC406A1F2CE0290045D07C /* Alamofire+Extensions.swift */,
+				45BC406D1F2CE3610045D07C /* NSError+Extensions.swift */,
+				45209F131F315E4200859AF6 /* Realm+Extensions.swift */,
+				45209F161F38D75F00859AF6 /* UIViewController+Extensions.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		45E816281F2525060088416F /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				45E816291F25251A0088416F /* Deck.swift */,
-				45E8162C1F2525230088416F /* Card.swift */,
+				45209F2A1F40EC5B00859AF6 /* Nudge */,
+				45209F261F3E352400859AF6 /* Card */,
+				45209F221F3E34EC00859AF6 /* Deck */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -136,6 +231,8 @@
 			isa = PBXGroup;
 			children = (
 				45E816311F252A7C0088416F /* Routes.swift */,
+				453D53521F2BC1890045AACD /* Errors.swift */,
+				45209F1F1F3E2D3500859AF6 /* Coffee.swift */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -365,11 +462,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				45E8162A1F25251A0088416F /* Deck.swift in Sources */,
-				45BAEC7F1F20583B0055B0EE /* ViewController.swift in Sources */,
+				45209F141F315E4200859AF6 /* Realm+Extensions.swift in Sources */,
+				45BAEC7F1F20583B0055B0EE /* DeckViewController.swift in Sources */,
+				45BC406B1F2CE0290045D07C /* Alamofire+Extensions.swift in Sources */,
 				45E816351F2535470088416F /* Session.swift in Sources */,
+				45BC40681F2CDF060045D07C /* JSON+Extensions.swift in Sources */,
+				45209F171F38D75F00859AF6 /* UIViewController+Extensions.swift in Sources */,
+				45BC40811F3002670045D07C /* NewCardFormController.swift in Sources */,
 				45E816321F252A7C0088416F /* Routes.swift in Sources */,
 				45BAEC7D1F20583B0055B0EE /* AppDelegate.swift in Sources */,
+				45209F241F3E34FD00859AF6 /* Deck+Data.swift in Sources */,
+				45BC407A1F2FE1DB0045D07C /* Nudge.swift in Sources */,
+				45BC40771F2E5B650045D07C /* NewDeckFormController.swift in Sources */,
+				45209F281F3E353300859AF6 /* Card+Data.swift in Sources */,
+				45BC40711F2CF2DD0045D07C /* RootTableViewController.swift in Sources */,
 				45E8162D1F2525230088416F /* Card.swift in Sources */,
+				45BC40741F2E49F40045D07C /* ChooseDeckViewController.swift in Sources */,
+				453D53531F2BC1890045AACD /* Errors.swift in Sources */,
+				45209F1D1F3A3C3100859AF6 /* ShuffledDeck.swift in Sources */,
+				45BC407D1F2FEC210045D07C /* NudgeTimeEditViewController.swift in Sources */,
+				45BC406E1F2CE3610045D07C /* NSError+Extensions.swift in Sources */,
+				45209F201F3E2D3500859AF6 /* Coffee.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,10 +491,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				45E816361F2535470088416F /* Session.swift in Sources */,
+				45209F151F315E4200859AF6 /* Realm+Extensions.swift in Sources */,
+				45BC407E1F2FEC210045D07C /* NudgeTimeEditViewController.swift in Sources */,
 				45E8162B1F25251A0088416F /* Deck.swift in Sources */,
 				45E816331F252A7C0088416F /* Routes.swift in Sources */,
 				45E8162E1F2525230088416F /* Card.swift in Sources */,
+				45209F181F38D75F00859AF6 /* UIViewController+Extensions.swift in Sources */,
+				45BC40821F3002670045D07C /* NewCardFormController.swift in Sources */,
+				45BC40751F2E49F40045D07C /* ChooseDeckViewController.swift in Sources */,
+				45BC40781F2E5B650045D07C /* NewDeckFormController.swift in Sources */,
+				45209F251F3E34FD00859AF6 /* Deck+Data.swift in Sources */,
+				453D53541F2BC1890045AACD /* Errors.swift in Sources */,
+				45BC406F1F2CE3610045D07C /* NSError+Extensions.swift in Sources */,
+				45209F291F3E353300859AF6 /* Card+Data.swift in Sources */,
+				45BC407F1F2FFFA40045D07C /* DeckViewController.swift in Sources */,
+				45BC40691F2CDF060045D07C /* JSON+Extensions.swift in Sources */,
+				45BC407B1F2FE1DB0045D07C /* Nudge.swift in Sources */,
 				45BAEC921F20583B0055B0EE /* FlashcardTests.swift in Sources */,
+				45BC40721F2CF2DD0045D07C /* RootTableViewController.swift in Sources */,
+				45209F1E1F3A3C3100859AF6 /* ShuffledDeck.swift in Sources */,
+				45BC406C1F2CE0290045D07C /* Alamofire+Extensions.swift in Sources */,
+				45209F211F3E2D3500859AF6 /* Coffee.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -515,12 +645,14 @@
 			baseConfigurationReference = 8FD52A740E62230C8AFDC9B2 /* Pods-Flashcard.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				BASE_API_ENDPOINT = "http://localhost:8080/";
 				DEVELOPMENT_TEAM = VEN2A639L9;
 				INFOPLIST_FILE = Flashcard/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.achimllc.Flashcard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -530,12 +662,14 @@
 			baseConfigurationReference = 50EE67A0B5EA5EDEB5BC474C /* Pods-Flashcard.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				BASE_API_ENDPOINT = "http://localhost:8080/";
 				DEVELOPMENT_TEAM = VEN2A639L9;
 				INFOPLIST_FILE = Flashcard/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.achimllc.Flashcard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

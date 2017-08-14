@@ -9,14 +9,19 @@
 import Foundation
 import Alamofire
 
+public struct API {
+    static let base: String = "http://localhost:8080/"
+}
+
 public enum Routes: URLRequestConvertible {
 
+    case wake()
     case decksList()
-    case decksNew()
-    case decksCards()
-    case decksUpdate()
-    case cardsNew()
-    case cardsUpdate()
+    case decksNew(name: String)
+    case decksCards(id: Int)
+    case decksUpdate(id: Int, name: String)
+    case cardsNew(deck_id: Int, front: String, back: String)
+    case cardsUpdate(id: Int, front: String, back: String)
     case cardsDelete()
     
     var api: String { return "" }
@@ -25,19 +30,27 @@ public enum Routes: URLRequestConvertible {
     
     var path: String {
         switch self {
-        case .decksList(), .decksNew(): return decks
-        case .decksCards(let id), .decksUpdate(let id): return decks + "/\(id)"
-        case .cardsNew(): return cards
-        case .cardsUpdate(let id), .cardsDelete(let id): return cards + "/\(id)"
+        case .wake(): return api
+        case .decksList(): return decks
+        case .decksNew(_): return decks
+        case .decksCards(let id): return decks + "/\(id)"
+        case .decksUpdate(let id, _): return decks + "/\(id)"
+        case .cardsNew(_,_,_): return cards
+        case .cardsUpdate(let id,_,_): return cards + "/\(id)"
+        case .cardsDelete(let id): return cards + "/\(id)"
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .decksList(), .decksCards(): return .get
-        case .decksNew(), .cardsNew(): return .post
-        case .decksUpdate(), .cardsUpdate(): return .patch
-        case .cardsDelete(): return .delete
+        case .wake(): return .get
+        case .decksList(): return .get
+        case .decksCards(_): return .get
+        case .decksNew(_): return .post
+        case .cardsNew(_,_,_): return .post
+        case .decksUpdate(_,_): return .patch
+        case .cardsUpdate(_,_,_): return .patch
+        case .cardsDelete(_): return .delete
         }
     }
     
@@ -46,12 +59,21 @@ public enum Routes: URLRequestConvertible {
     }
     
     var body: Data? {
-        // TODO: Serialize JSON
-        return nil
+        switch self {
+        case .decksNew(let name):
+            return try? JSONSerialization.data(withJSONObject: [Deck.keys.name: name])
+        case .decksUpdate(_,let name):
+            return try? JSONSerialization.data(withJSONObject: [Deck.keys.name: name])
+        case .cardsNew(let deck_id, let front,let back):
+            return try? JSONSerialization.data(withJSONObject: [Card.keys.deck_id: deck_id, Card.keys.front: front, Card.keys.back: back])
+        case .cardsUpdate(_, let front, let back):
+            return try? JSONSerialization.data(withJSONObject: [Card.keys.front: front, Card.keys.back: back])
+        default: return nil
+        }
     }
     
     public func asURLRequest() throws -> URLRequest {
-        let url = try "localhost".asURL()
+        let url = try API.base.asURL()
         
         var urlRequest = URLRequest(url: url.appendingPathComponent(path))
         

@@ -90,17 +90,29 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire-iOS9.0/Alamofire.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Eureka-iOS9.0/Eureka.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/FileKit-iOS9.0/FileKit.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Gloss-iOS9.0/Gloss.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/SwiftyDB-iOS9.0/SwiftyDB.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/TinySQLite-iOS9.0/TinySQLite.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/sqlite3-iOS9.0/sqlite3.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Morgan-iOS9.0/Morgan.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/PKHUD-iOS9.0/PKHUD.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Realm-iOS9.0/Realm.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/RealmSwift-iOS9.0/RealmSwift.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SwiftyTimer-iOS9.0/SwiftyTimer.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Walker-iOS9.0/Walker.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/thenPromise-iOS9.0/then.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire-iOS9.0/Alamofire.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Eureka-iOS9.0/Eureka.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/FileKit-iOS9.0/FileKit.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Gloss-iOS9.0/Gloss.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/SwiftyDB-iOS9.0/SwiftyDB.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/TinySQLite-iOS9.0/TinySQLite.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/sqlite3-iOS9.0/sqlite3.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Morgan-iOS9.0/Morgan.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/PKHUD-iOS9.0/PKHUD.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Realm-iOS9.0/Realm.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/RealmSwift-iOS9.0/RealmSwift.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/SwiftyTimer-iOS9.0/SwiftyTimer.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Walker-iOS9.0/Walker.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/thenPromise-iOS9.0/then.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait

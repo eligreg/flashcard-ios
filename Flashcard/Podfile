@@ -4,9 +4,15 @@ source 'https://github.com/CocoaPods/Specs.git'
 ["Flashcard", "FlashcardTests"].each do | env |
     target env do
         
-        pod 'Alamofire'
+        pod 'Alamofire'        
         pod 'Gloss'
-        pod 'SwiftyDB'
+        pod 'FileKit'
+        pod 'thenPromise'
+        pod 'PKHUD', '~> 4.0'
+        pod 'Eureka'
+        pod 'RealmSwift'
+        pod 'Morgan'
+        pod 'SwiftyTimer'
         
         use_frameworks!
     end

@@ -1,0 +1,6 @@
+framework module PKHUD {
+  umbrella header "PKHUD-iOS10.3-umbrella.h"
+
+  export *
+  module * { export * }
+}

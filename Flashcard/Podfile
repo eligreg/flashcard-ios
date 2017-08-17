@@ -13,6 +13,8 @@ source 'https://github.com/CocoaPods/Specs.git'
         pod 'RealmSwift'
         pod 'SwiftyTimer'
         pod 'BPStatusBarAlert'
+        pod 'Fabric'
+        pod 'Crashlytics'
         
         use_frameworks!
     end

@@ -29,6 +29,7 @@ class ChooseDeckViewController: UITableViewController {
             }
             .onError { err in
                 StatusBar.display(message: err.userErrorMessage)
+                FlashcardError.log(error: err)
             }
             .finally {
                 PKHUD.sharedHUD.hide()

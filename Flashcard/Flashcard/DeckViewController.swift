@@ -65,6 +65,7 @@ class DeckViewController: UIViewController, UIGestureRecognizerDelegate {
                     msg = "\(err.localizedDescription)"
                 }
                 StatusBar.display(message: msg)
+                FlashcardError.log(error: err)
             }
             .finally {
                 self.shuffledDeck?.shuffle()

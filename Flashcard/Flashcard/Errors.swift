@@ -8,6 +8,7 @@
 
 import Foundation
 import BPStatusBarAlert
+import Crashlytics
 
 class StatusBar {
     
@@ -91,4 +92,12 @@ struct FlashcardError {
                        userInfo: ["message": "Oops, there was a Server error.",
                                   "meta": "Could not read Card Delete response"])
     }()
+    
+    static func log(error err: NSError) {
+        Crashlytics.sharedInstance().recordError(err)
+    }
+    
+    static func log(error err: Error) {
+        Crashlytics.sharedInstance().recordError(err)
+    }
 }

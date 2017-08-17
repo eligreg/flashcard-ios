@@ -1,7 +1,10 @@
 PODS:
   - Alamofire (4.5.0)
   - BPStatusBarAlert (0.1.4)
+  - Crashlytics (3.8.5):
+    - Fabric (~> 1.6.3)
   - Eureka (3.1.0)
+  - Fabric (1.6.12)
   - FileKit (4.0.1)
   - Gloss (1.2.4)
   - PKHUD (4.2.3)
@@ -16,7 +19,9 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - BPStatusBarAlert
+  - Crashlytics
   - Eureka
+  - Fabric
   - FileKit
   - Gloss
   - PKHUD (~> 4.0)
@@ -27,7 +32,9 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   Alamofire: f28cdffd29de33a7bfa022cbd63ae95a27fae140
   BPStatusBarAlert: 400badfd78f16362bc29990be3e8bbfc1c22a50f
+  Crashlytics: dfbae35ef22ca189240d230ad501feea4ee85d2d
   Eureka: d6725c38d0dcdceaa331d1468f75e76315715ae0
+  Fabric: f050464eac45a2ce5a8e6e6a07e977c0df32fe28
   FileKit: 1ea916f594bc0bb9a3951f80edf92b52bb7f883c
   Gloss: 4e036074610fdb993abcb958ebcd7332588e2333
   PKHUD: c7692163a09875cbf15827dc581df3c5cf7f1015
@@ -36,6 +43,6 @@ SPEC CHECKSUMS:
   SwiftyTimer: 2efd74b060d69ad4f1496baf5bbedbe132125fcf
   thenPromise: c6c356db4a6d5865be4668bdb7657233d9d843c0
 
-PODFILE CHECKSUM: 929a18f04c88dda2a2d30149624dc00bb4c7bff7
+PODFILE CHECKSUM: dc41f1d5c8b6985bf1ab560a425c2126d86b12a0
 
 COCOAPODS: 1.2.0

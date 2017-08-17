@@ -278,6 +278,7 @@
 				45BAEC771F20583B0055B0EE /* Resources */,
 				EC2D2FCAA0CAE28EE3B5758A /* [CP] Embed Pods Frameworks */,
 				6F819E68CD03197C3876D2FF /* [CP] Copy Pods Resources */,
+				450F7C8F1F461F7B00A497EB /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -403,6 +404,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FlashcardTests/Pods-FlashcardTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		450F7C8F1F461F7B00A497EB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" ee45217ea1ad4218340e18d97e23547c02c7e46e f2eeb1934335beb07a81efb2d410d3967d8a56a1a1ae2aef1f055dfa0fddcf71";
 		};
 		5B530FCAB6E0A756023702BC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

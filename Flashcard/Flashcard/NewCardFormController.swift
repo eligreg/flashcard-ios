@@ -65,6 +65,7 @@ class NewCardFormController: FormViewController {
                     }
                     .onError { err in
                         StatusBar.display(message: err.userErrorMessage)
+                        FlashcardError.log(error: err)
                     }
                     .finally {
                         self.dismiss(animated: true, completion: nil)

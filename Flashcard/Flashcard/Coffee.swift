@@ -17,13 +17,18 @@ class Coffee {
     fileprivate var timer: Timer?
     fileprivate var request: Request?
     
-    static var shared = Coffee()
+    fileprivate static var shared = Coffee()
     
     static func start() {
         shared.sip()
-        shared.timer = Timer.every(30.seconds) {
+        shared.timer = Timer.every(90.seconds) {
             shared.sip()
         }
+    }
+    
+    static func sip() {
+        print("Background Coffee Sip")
+        shared.sip()
     }
     
     fileprivate func sip() {

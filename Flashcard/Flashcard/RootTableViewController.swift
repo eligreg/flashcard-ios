@@ -36,19 +36,13 @@ class RootTableViewController: UITableViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        print(Realm.Configuration.defaultConfiguration.fileURL!)
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        self.tableView.reloadData()
-        
-        if Session.shouldPushDeck {
-            self.performSegue(withIdentifier: "rootTableToDeckView", sender: self)
+        Session.sychronize().finally {
+            self.tableView.reloadData()
+            if Session.shouldPushDeck {
+                self.performSegue(withIdentifier: "rootTableToDeckView", sender: self)
+            }
         }
     }
     

@@ -11,6 +11,11 @@ import Gloss
 
 class Secrets {
     
+    struct Keys {        
+        static let envToken = "FLASHCARD_ENV_TOKEN"
+        static let baseURL = "FLASHCARD_BASE_URL"
+    }
+    
     fileprivate static func loadSecrets() throws -> JSON {
         
         guard let path = Bundle.main.path(forResource: "secrets", ofType: "json"),
@@ -18,7 +23,7 @@ class Secrets {
               let json = try JSONSerialization.jsonObject(with: contents, options: .allowFragments) as? JSON
         
         else {
-            throw FlashcardError.invalidSecretsError
+            throw FlashcardError.invalidSecrets
         }
         
         return json
@@ -28,8 +33,8 @@ class Secrets {
         
         let json = try loadSecrets()
         
-        guard let token = json["FLASHCARD_ENV_TOKEN"] as? String else {
-            throw FlashcardError.invalidSecretsTokenError
+        guard let env = json[Environment.env] as? JSON, let token = env[Keys.envToken] as? String else {
+            throw FlashcardError.invalidSecretsToken
         }
         
         return token
@@ -39,8 +44,8 @@ class Secrets {
         
         let json = try loadSecrets()
         
-        guard let token = json["FLASHCARD_BASE_URL"] as? String else {
-            throw FlashcardError.invalidSecretsBaseURLError
+        guard let env = json[Environment.env] as? JSON, let token = env[Keys.baseURL] as? String else {
+            throw FlashcardError.invalidSecretsBaseURL
         }
         
         return token
@@ -52,9 +57,8 @@ class Secrets {
             return try loadToken()
         }
         catch let err as NSError {
-            
             print(err)
-            StatusBar.display(message: err.userErrorMessage)
+            FlashcardError.processError(err: err)
             return "xx_fallback_token_xx"
         }
     }()
@@ -67,7 +71,7 @@ class Secrets {
         catch let err as NSError {
             
             print(err)
-            StatusBar.display(message: err.userErrorMessage)
+            FlashcardError.processError(err: err)
             return "http://localhost:8080/"
         }
     }()

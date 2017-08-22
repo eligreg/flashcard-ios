@@ -53,29 +53,27 @@ class DeckViewController: UIViewController, UIGestureRecognizerDelegate {
         self.view.addGestureRecognizer(tap)
 
         shuffledDeck = ShuffledDeck()
-
-        Session.deck?
-            .synchronizeCards()
-            .onError { err in
-                var msg: String = ""
-                if err is FlashcardError {
-                    msg = err.userErrorMessage!
-                }
-                else {
-                    msg = "\(err.localizedDescription)"
-                }
-                StatusBar.display(message: msg)
-                FlashcardError.log(error: err)
-            }
-            .finally {
-                self.shuffledDeck?.shuffle()
-                self.update()
+        
+        if let deck = Session.deck {
+            
+            Deck.get(deck: deck)
+                .retry(2)
+                .then(Deck.addLocal)
+                .then(Deck.getCards)
+                .retry(2)
+                .then(Deck.synchronizeLocalCards)
+                .onError(FlashcardError.processError)
+                .finally({
+                    self.shuffledDeck?.shuffle()
+                    self.update()
+                })
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.shuffledDeck?.shuffle()
         self.update()
     }
     

@@ -18,11 +18,12 @@ public enum Routes: URLRequestConvertible {
     case wake()
     case decksList()
     case decksNew(name: String)
+    case deck(id: Int)
     case decksCards(id: Int)
     case decksUpdate(id: Int, name: String)
     case cardsNew(deck_id: Int, front: String, back: String)
     case cardsUpdate(id: Int, front: String, back: String)
-    case cardsDelete()
+    case cardsDelete(id: Int)
     
     var api: String { return "" }
     var decks: String { return api + "/decks" }
@@ -33,7 +34,8 @@ public enum Routes: URLRequestConvertible {
         case .wake(): return api
         case .decksList(): return decks
         case .decksNew(_): return decks
-        case .decksCards(let id): return decks + "/\(id)"
+        case .deck(let id): return decks + "/\(id)"
+        case .decksCards(let id): return decks + "/\(id)" + cards
         case .decksUpdate(let id, _): return decks + "/\(id)"
         case .cardsNew(_,_,_): return cards
         case .cardsUpdate(let id,_,_): return cards + "/\(id)"
@@ -45,6 +47,7 @@ public enum Routes: URLRequestConvertible {
         switch self {
         case .wake(): return .get
         case .decksList(): return .get
+        case .deck(_): return .get
         case .decksCards(_): return .get
         case .decksNew(_): return .post
         case .cardsNew(_,_,_): return .post
@@ -58,7 +61,7 @@ public enum Routes: URLRequestConvertible {
         return [
             "Content-Type": "application/json",
             "Accept": "application/json",
-            "X-Token": Secrets.requestToken ?? "failed_token"
+            "X-Token": Secrets.requestToken
         ]
     }
     

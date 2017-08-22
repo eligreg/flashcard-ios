@@ -10,6 +10,7 @@ import Foundation
 import Eureka
 import Alamofire
 import PKHUD
+import then
 
 class NewDeckFormController: FormViewController {
     
@@ -45,20 +46,32 @@ class NewDeckFormController: FormViewController {
                     return
                 }
                 
-                PKHUD.sharedHUD.contentView = PKHUDProgressView()
-                PKHUD.sharedHUD.show()
+                self.showProgress()
                 
-                Deck.new(deck: name).then { deck in
+                Deck.new(deck: name)
+                    .retry(3)
+                    .then(Deck.addLocal)
+                    .then({ deck  in
                         Session.deck = deck
                         self.navigationController?.popViewController(animated: true)
-                    }
-                    .onError { err in
-                        StatusBar.display(message: err.userErrorMessage)
-                        FlashcardError.log(error: err)
-                    }
-                    .finally {
-                        PKHUD.sharedHUD.hide()
-                }
+                    })
+                    .onError(FlashcardError.processError)
+                    .finally({
+                        self.hideProgress()
+                    })
+                
+                
+//                Deck.new(deck: name).then { deck in
+//                        Session.deck = deck
+//                        self.navigationController?.popViewController(animated: true)
+//                    }
+//                    .onError { err in
+//                        StatusBar.display(message: err.userErrorMessage)
+//                        FlashcardError.log(error: err)
+//                    }
+//                    .finally {
+//                        PKHUD.sharedHUD.hide()
+//                }
             })
         }
         

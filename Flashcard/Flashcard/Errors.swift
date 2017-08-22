@@ -21,77 +21,91 @@ class StatusBar {
     }
 }
 
-struct FlashcardError {
-    static let domain: String = "com.achimllc.flashcard"
+enum FlashcardError: Error {
+    // 100s
+    case invalidJSON
+    case invalidSecrets
+    case invalidSecretsToken
+    case invalidSecretsBaseURL
+    case serverError
+    // 200s
+    case deckJSONDecode
+    case deckResponse(msg:String)
+    case deckMissing
+    // 300s
+    case cardJSONDecode
+    case cardResponse(msg:String)
+    case cardMissing
+    case cardDelete
     
-    // MARK: General Errors, 100s
-    
-    static let invalidJSONError: NSError = {
-        return NSError(domain: domain,
-                       code: 101,
-                       userInfo: ["message": "Oops, there was a Server error.",
-                                  "meta": "Response is invalid JSON"])
-    }()
-    
-    static let invalidSecretsError: NSError = {
-        return NSError(domain: domain,
-                       code: 102,
-                       userInfo: ["message": "Couldn't load Secrets Document.",
-                                  "meta": "Response is invalid JSON"])
-    }()
-    
-    static let invalidSecretsTokenError: NSError = {
-        return NSError(domain: domain,
-                       code: 103,
-                       userInfo: ["message": "Couldn't load Secrets Request Token.",
-                                  "meta": "Response is invalid JSON"])
-    }()
-    
-    static let invalidSecretsBaseURLError: NSError = {
-        return NSError(domain: domain,
-                       code: 104,
-                       userInfo: ["message": "Couldn't load Secrets Base URL.",
-                                  "meta": "Response is invalid JSON"])
-    }()
-    
-    // MARK: Deck Errors, 200s
-    
-    static let deckJSONDecodeError: NSError = {
-        return NSError(domain: domain,
-                       code: 201,
-                       userInfo: ["message": "Oops, there was a Server error.",
-                                  "meta": "Could not serialize Deck JSON"])
-    }()
-    
-    static func deckResponseError(message msg: String) -> NSError {
-        return NSError(domain: domain,
-                       code: 202,
-                       userInfo: ["message": msg,
-                                  "meta": "User Error: \(msg)"])
+    var message: String {
+        switch self {
+        case .invalidJSON: return "Oops, there was a server error."
+        case .invalidSecrets: return "Oops, there was a local error."
+        case .invalidSecretsToken: return "Oops, there was a local error."
+        case .invalidSecretsBaseURL: return "Oops, there was a local error."
+        case .serverError: return "Oops, there was a server error."
+
+        case .deckJSONDecode: return "Oops, there was a Server error."
+        case .deckResponse(let msg): return msg
+        case .deckMissing: return "This Deck has been deleted."
+
+        case .cardJSONDecode: return "Oops, there was a Server error."
+        case .cardResponse(let msg): return msg
+        case .cardMissing: return "This Card has been deleted."
+        case .cardDelete: return "This Card cannot be deleted"
+        }
     }
     
-    // MARK: Card Errors, 300s
-    
-    static let cardJSONDecodeError: NSError = {
-        return NSError(domain: domain,
-                       code: 301,
-                       userInfo: ["message": "Oops, there was a Server error.",
-                                  "meta": "Could not serialize Card JSON"])
-    }()
-    
-    static func cardResponseError(message msg: String) -> NSError {
-        return NSError(domain: domain,
-                       code: 302,
-                       userInfo: ["message": msg,
-                                  "meta": "User Error: \(msg)"])
+    var meta: String {
+        switch self {
+        case .invalidJSON: return "Response is invalid JSON"
+        case .invalidSecrets: return "Couldn't load secrets.json"
+        case .invalidSecretsToken: return "Couldn't load secrets.json token"
+        case .invalidSecretsBaseURL: return "Couldn't load secrets.json base URL"
+        case .serverError: return "Generalized Server Error"
+            
+        case .deckJSONDecode: return "Could not serialize Deck JSON"
+        case .deckResponse(let msg): return "User Error: \(msg)"
+        case .deckMissing: return "Deck request responded with 404"
+            
+        case .cardJSONDecode: return "Could not serialize Card JSON"
+        case .cardResponse(let msg): return "User Error: \(msg)"
+        case .cardMissing: return "Could not read Card Delete response"
+        case .cardDelete: return "JSON could not serialize properly."
+        }
     }
     
-    static let cardJSONDeleteError: NSError = {
-        return NSError(domain: domain,
-                       code: 303,
-                       userInfo: ["message": "Oops, there was a Server error.",
-                                  "meta": "Could not read Card Delete response"])
-    }()
+    var code: Int {
+        switch self {
+        case .invalidJSON: return 101
+        case .invalidSecrets: return 102
+        case .invalidSecretsToken: return 103
+        case .invalidSecretsBaseURL: return 104
+        case .serverError: return 105
+            
+        case .deckJSONDecode: return 201
+        case .deckResponse(_): return 202
+        case .deckMissing: return 203
+            
+        case .cardJSONDecode: return 301
+        case .cardResponse(_): return 302
+        case .cardMissing: return 303
+        case .cardDelete: return 304
+        }
+    }
+    
+    var localizedDescription: String {
+        return message
+    }
+    
+    var domain: String {
+        return "com.achimllc.flashcard.error.\(code)"
+    }
+    
+    var nserr: NSError {
+        return NSError(domain: domain, code: code, userInfo: ["message": message, "meta": meta])
+    }
     
     static func log(error err: NSError) {
         Crashlytics.sharedInstance().recordError(err)
@@ -100,4 +114,10 @@ struct FlashcardError {
     static func log(error err: Error) {
         Crashlytics.sharedInstance().recordError(err)
     }
+    
+    static func processError(err: Error) {
+        StatusBar.display(message: err.localizedDescription)
+        FlashcardError.log(error: err)
+    }
 }
+

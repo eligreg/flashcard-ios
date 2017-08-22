@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import PKHUD
 
 extension UIViewController {
     
@@ -16,5 +17,14 @@ extension UIViewController {
         let ok = UIAlertAction(title: "OK", style: .default) { (action: UIAlertAction) in completion?() }
         alert.addAction(ok)
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    func showProgress() {
+        PKHUD.sharedHUD.contentView = PKHUDProgressView()
+        PKHUD.sharedHUD.show()
+    }
+    
+    func hideProgress() {
+        PKHUD.sharedHUD.hide()
     }
 }

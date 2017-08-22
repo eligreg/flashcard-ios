@@ -16,63 +16,50 @@ import RealmSwift
 
 extension Deck {
     
-    static func fetchLocal() -> Promise<[Deck]> {
-        return Promise { resolve, reject in
-            do {
-                let realm = try Realm()
-                let decks:[Deck] = realm.objects(Deck.self).map({ return $0 })
-                resolve(decks)
-            }
-            catch let error as NSError {
-                reject(error)
-            }
-        }
-    }
-    
-    static func synchronize() -> Promise<[Deck]> {
+    static func get() -> Promise<[Deck]> {
         return Promise { resolve, reject in
             Alamofire.request(Routes.decksList())
                 .responseJSON { (response: DataResponse<Any>) in
                     if let err = response.error {
+                        print(err.localizedDescription)
                         reject(err)
                         return
                     }
                     guard let json = response.jsonArray else {
-                        reject(FlashcardError.invalidJSONError)
+                        reject(FlashcardError.invalidJSON)
                         return
                     }
                     guard let decks = [Deck].from(jsonArray: json) else {
-                        reject(FlashcardError.deckJSONDecodeError)
+                        reject(FlashcardError.deckJSONDecode)
                         return
-                    }
-                    do {
-                        let realm = try Realm()
-                        var deckIds = Set(realm.objects(Deck.self).map({ return $0.id }))
-                        try realm.write {
-                            // Iterate through all Decks
-                            for deck in decks {
-                                // Add or Update all Decks in response
-                                realm.add(deck, update: true)
-                                // Find which Decks to delete
-                                if deckIds.contains(deck.id) {
-                                    deckIds.remove(deck.id)
-                                }
-                            }
-                            //                            if Session.deck != nil, deckIds.contains(Session.deck!.id) {
-                            //                                Session.deck = nil
-                            //                            }
-                            // Delete unwanted Decks
-                            let unwanted = realm.objects(Deck.self).filter({ (deck: Deck) -> Bool in
-                                deckIds.contains(deck.id)
-                            })
-                            realm.delete(unwanted)
-                        }
-                    }
-                    catch let error as NSError {
-                        reject(error)
                     }
                     resolve(decks)
             }
+        }
+    }
+    
+    static func get(deck: Deck) -> Promise<Deck> {
+        return Promise { resolve, reject in
+            Alamofire.request(Routes.deck(id: deck.id))
+                .responseJSON(completionHandler: { (response: DataResponse<Any>) in
+                    if let err = response.error {
+                        reject(err)
+                        return
+                    }
+                    guard let json = response.json else {
+                        reject(FlashcardError.invalidJSON)
+                        return
+                    }
+                    if let message = json.errorMessage {
+                        reject(FlashcardError.deckResponse(msg: message))
+                        return
+                    }
+                    guard let deck = Deck(json: json) else {
+                        reject(FlashcardError.deckJSONDecode)
+                        return
+                    }
+                    resolve(deck)
+            })
         }
     }
     
@@ -85,156 +72,110 @@ extension Deck {
                         return
                     }
                     guard let json = response.json else {
-                        reject(FlashcardError.invalidJSONError)
+                        reject(FlashcardError.invalidJSON)
                         return
                     }
                     if let message = json.errorMessage {
-                        reject(FlashcardError.deckResponseError(message: message))
+                        reject(FlashcardError.deckResponse(msg: message))
                         return
                     }
                     guard let deck = Deck(json: json) else {
-                        reject(FlashcardError.deckJSONDecodeError)
+                        reject(FlashcardError.deckJSONDecode)
                         return
                     }
-                    do {
-                        let realm = try Realm()
-                        try realm.write {
-                            realm.add(deck)
-                        }
+                    resolve(deck)
+                })
+        }
+    }
+        
+    static func getCards(forDeck: Deck) -> Promise<(Deck,[Card])> {
+        return Promise { resolve, reject in
+            Alamofire.request(Routes.decksCards(id: forDeck.id))
+                .responseJSON { (response: DataResponse<Any>) in
+                    if let err = response.result.error {
+                        reject(err)
+                        return
                     }
-                    catch let error as NSError {
-                        reject(error)
+                    guard let resp = response.response, resp.statusCode == 200 else {
+                        print(response.response!.statusCode)
+                        if let resp = response.response, (resp.statusCode == 404 || resp.statusCode == 403) {
+                            if let deck = Session.deck {
+                                do {
+                                    let realm = try Realm()
+                                    try realm.write {
+                                        realm.delete(deck)
+                                    }
+                                }
+                                catch let err as NSError {
+                                    reject(err)
+                                }
+                            }
+                            reject(FlashcardError.deckMissing)
+                        }
+                        else {
+                            reject(FlashcardError.serverError)
+                        }
+                        return
+                    }
+                    guard let json = response.jsonArray else {
+                        reject(FlashcardError.invalidJSON)
+                        return
+                    }
+                    guard let cards = [Card].from(jsonArray: json) else {
+                        reject(FlashcardError.cardJSONDecode)
+                        return
+                    }
+                    resolve((forDeck, cards))
+            }
+        }
+    }
+    
+    static func patch(deck: Deck, withName name: String) -> Promise<Deck> {
+        return Promise { resolve, reject in
+            Alamofire.request(Routes.decksUpdate(id: deck.id, name: name))
+                .responseJSON(completionHandler: { (response: DataResponse<Any>) in
+                    if let err = response.error {
+                        reject(err)
+                        return
+                    }
+                    guard let json = response.json else {
+                        reject(FlashcardError.invalidJSON)
+                        return
+                    }
+                    if let message = json.errorMessage {
+                        reject(FlashcardError.deckResponse(msg: message))
+                        return
+                    }
+                    guard let deck = Deck(json: json) else {
+                        reject(FlashcardError.deckJSONDecode)
+                        return
                     }
                     resolve(deck)
                 })
         }
     }
     
-    func synchronizeCards() -> Promise<Void> {
+    static func new(cardForDeck deck: Deck, front:String, back:String) -> Promise<(Deck,Card)> {
         return Promise { resolve, reject in
-            Alamofire.request(Routes.decksCards(id: self.id))
-                .responseJSON { (response: DataResponse<Any>) in
-                    if let err = response.error {
-                        reject(err)
-                        return
-                    }
-                    guard let json = response.jsonArray else {
-                        reject(FlashcardError.invalidJSONError)
-                        return
-                    }
-                    guard let cards = [Card].from(jsonArray: json) else {
-                        reject(FlashcardError.cardJSONDecodeError)
-                        return
-                    }
-                    do {
-                        let realm = try Realm()
-                        var cardIds = Set<Int>()
-                        if let deck = realm.object(ofType: Deck.self, forPrimaryKey: self.id) {
-                            cardIds = Set(deck.cards.map({ $0.id }))
-                        }
-                        try realm.write {
-                            for card in cards {
-                                realm.add(cards, update: true)
-                                if !self.cards.contains(card) {
-                                    self.cards.append(card)
-                                }
-                                if cardIds.contains(card.id) {
-                                    cardIds.remove(card.id)
-                                }
-                            }
-                            let unwanted = realm.objects(Card.self).filter({ (card: Card) -> Bool in
-                                return cardIds.contains(card.id)
-                            })
-                            var removalIndexes = [Int]()
-                            for (index, card) in unwanted.enumerated() {
-                                if self.cards.contains(card) {
-                                    removalIndexes.append(index)
-                                }
-                            }
-                            for index in removalIndexes {
-                                self.cards.remove(objectAtIndex: index)
-                            }
-                            if let sessionDeck = Session.deck {
-                                if removalIndexes.contains(sessionDeck.id) {
-                                    Session.deck = nil
-                                }
-                            }
-                            realm.delete(unwanted)
-                        }
-                    }
-                    catch let error as NSError {
-                        reject(error)
-                    }
-                    resolve()
-            }
-        }
-    }
-    
-    func patch(name nam: String) -> Promise<Void> {
-        return Promise { resolve, reject in
-            Alamofire.request(Routes.decksUpdate(id: self.id, name: nam))
+            Alamofire.request(Routes.cardsNew(deck_id: deck.id, front: front, back: back))
                 .responseJSON(completionHandler: { (response: DataResponse<Any>) in
                     if let err = response.error {
                         reject(err)
                         return
                     }
                     guard let json = response.json else {
-                        reject(FlashcardError.invalidJSONError)
+                        reject(FlashcardError.invalidJSON)
                         return
                     }
                     if let message = json.errorMessage {
-                        reject(FlashcardError.deckResponseError(message: message))
-                        return
-                    }
-                    guard let deck = Deck(json: json) else {
-                        reject(FlashcardError.deckJSONDecodeError)
-                        return
-                    }
-                    do {
-                        let realm = try Realm()
-                        try realm.write {
-                            realm.add(deck, update: true)
-                        }
-                    }
-                    catch let error as NSError {
-                        reject(error)
-                    }
-                    resolve()
-                })
-        }
-    }
-    
-    func new(card front:String, back:String) -> Promise<Void> {
-        return Promise { resolve, reject in
-            Alamofire.request(Routes.cardsNew(deck_id: self.id, front: front, back: back))
-                .responseJSON(completionHandler: { (response: DataResponse<Any>) in
-                    if let err = response.error {
-                        reject(err)
-                        return
-                    }
-                    guard let json = response.json else {
-                        reject(FlashcardError.invalidJSONError)
-                        return
-                    }
-                    if let message = json.errorMessage {
-                        reject(FlashcardError.cardResponseError(message: message))
+                        reject(FlashcardError.cardResponse(msg: message))
                         return
                     }
                     guard let card = Card(json: json) else {
-                        reject(FlashcardError.cardJSONDecodeError)
+                        reject(FlashcardError.cardJSONDecode)
                         return
                     }
-                    do {
-                        let realm = try Realm()
-                        try realm.write {
-                            realm.add(card, update: true)
-                            self.cards.insert(card, at: 0)
-                        }
-                    }
-                    catch let error as NSError {
-                        reject(error)
-                    }
-                    resolve()
+                    resolve((deck, card))
                 })
         }
     }

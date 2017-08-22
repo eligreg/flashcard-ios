@@ -8,6 +8,8 @@
 
 import Foundation
 import RealmSwift
+import then
+import Alamofire
 
 class Session {
     
@@ -34,13 +36,34 @@ class Session {
         }
     }
     
+    static func sychronize() -> Promise<Deck?> {
+        return Promise<Deck?> { resolve, reject in
+            guard let deck = deck else {
+                resolve(nil)
+                return
+            }
+            Deck.get(deck: deck)
+                .then(Deck.addLocal)
+                .then ({ deck in
+                    self.deck = deck
+                })
+                .onError({ err in
+                    self.deck = nil
+                    FlashcardError.processError(err: err)
+                })
+                .finally({
+                    resolve(self.deck)
+                })
+        }
+    }
+    
     // MARK: Restoring a Session or forcing a push
     
     static var shouldPushDeck: Bool {
         get {
             let r = push
             push = false
-            return r
+            return r && deck != nil
         }
     }
     
@@ -92,6 +115,8 @@ class Session {
         }
     }
     
-    fileprivate static var currentDeckIdUserDefaultKey = "com.achimllc.flashcard.currentDeckIdUserDefaultKey"
+    fileprivate static var currentDeckIdUserDefaultKey: String {
+        return "com.achimllc.flashcard.currentDeckIdUserDefaultKey.\(Environment.env)"
+    }
 
 }

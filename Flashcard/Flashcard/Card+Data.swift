@@ -14,72 +14,56 @@ import RealmSwift
 
 extension Card {
     
-    func patch(card front:String, back:String) -> Promise<Void> {
+    static func patch(card: Card, front:String, back:String) -> Promise<Card> {
         return Promise { resolve, reject in
-            Alamofire.request(Routes.cardsUpdate(id: self.id, front: front, back: back))
+            Alamofire.request(Routes.cardsUpdate(id: card.id, front: front, back: back))
                 .responseJSON(completionHandler: { (response: DataResponse<Any>) in
                     if let err = response.error {
                         reject(err)
                         return
                     }
                     guard let json = response.json else {
-                        reject(FlashcardError.invalidJSONError)
+                        reject(FlashcardError.invalidJSON)
                         return
                     }
                     if let message = json.errorMessage {
-                        reject(FlashcardError.cardResponseError(message: message))
+                        reject(FlashcardError.cardResponse(msg: message))
                         return
                     }
                     guard let card = Card(json: json) else {
-                        reject(FlashcardError.cardJSONDecodeError)
+                        reject(FlashcardError.cardJSONDecode)
                         return
                     }
-                    do {
-                        let realm = try Realm()
-                        try realm.write {
-                            realm.add(card, update: true)
-                        }
-                    }
-                    catch let error as NSError {
-                        reject(error)
-                    }
-                    resolve()
+                    resolve(card)
                 })
         }
     }
     
-    func delete() -> Promise<Bool> {
+    static func delete(card: Card) -> Promise<Card> {
         return Promise { resolve, reject in
-            Alamofire.request(Routes.cardsDelete())
+            Alamofire.request(Routes.cardsDelete(id: card.id))
                 .responseJSON(completionHandler: { (response: DataResponse<Any>) in
                     if let err = response.error {
                         reject(err)
                         return
                     }
                     guard let json = response.json else {
-                        reject(FlashcardError.invalidJSONError)
+                        reject(FlashcardError.invalidJSON)
                         return
                     }
                     if let message = json.errorMessage {
-                        reject(FlashcardError.cardResponseError(message: message))
+                        reject(FlashcardError.cardResponse(msg: message))
                         return
                     }
                     guard let success = json["success"] as? Bool else {
-                        reject(FlashcardError.cardJSONDeleteError)
+                        reject(FlashcardError.cardDelete)
                         return
                     }
-                    if success {
-                        do {
-                            let realm = try Realm()
-                            try realm.write {
-                                realm.delete(self)
-                            }
-                        }
-                        catch let error as NSError {
-                            reject(error)
-                        }
+                    guard success else {
+                        reject(FlashcardError.serverError)
+                        return
                     }
-                    resolve(success)
+                    resolve(card)
                 })
         }
     }

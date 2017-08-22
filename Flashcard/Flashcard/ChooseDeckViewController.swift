@@ -18,22 +18,18 @@ class ChooseDeckViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        PKHUD.sharedHUD.contentView = PKHUDProgressView()
-        PKHUD.sharedHUD.show()
-
-        Deck.synchronize()
-            .recover(with: Deck.fetchLocal())
-            .then { (decks: [Deck]) in
+        self.showProgress()
+        
+        Deck.get()
+            .then(Deck.synchronizeLocalDecks)
+            .then ({ decks in
                 self.decks = decks
                 self.tableView.reloadData()
-            }
-            .onError { err in
-                StatusBar.display(message: err.userErrorMessage)
-                FlashcardError.log(error: err)
-            }
-            .finally {
-                PKHUD.sharedHUD.hide()
-        }
+            })
+            .onError(FlashcardError.processError)
+            .finally({
+                self.hideProgress()
+            })
     }
     
     // MARK Delegate

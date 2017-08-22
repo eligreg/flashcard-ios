@@ -10,6 +10,8 @@ import UIKit
 import UserNotifications
 import Fabric
 import Crashlytics
+import Alamofire
+import SwiftyTimer
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -33,6 +35,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillEnterForeground(_ application: UIApplication) {
         Coffee.start()
         Session.restore()
+    }
+    
+    func application(_ application: UIApplication,
+                     performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        // Take A Sip
+        Coffee.sip()
+        
+        // Return From Fetch, random time with random results.
+        Timer.after(randomDouble(min: 1.6, max: 3.2)) {
+            completionHandler(Bool(randomInt(min: 0, max: 1) as NSNumber) ? .newData : .noData)
+        }
+        
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {}

@@ -56,21 +56,19 @@ class NewCardFormController: FormViewController {
                     return
                 }
                 
-                PKHUD.sharedHUD.contentView = PKHUDProgressView()
-                PKHUD.sharedHUD.show()
+                self.showProgress()
                 
-                Session.deck!.new(card: front, back: back)
-                    .then {
-                        PKHUD.sharedHUD.hide()
-                    }
-                    .onError { err in
-                        StatusBar.display(message: err.userErrorMessage)
-                        FlashcardError.log(error: err)
-                    }
-                    .finally {
-                        self.dismiss(animated: true, completion: nil)
-                        PKHUD.sharedHUD.hide()
-                    }
+                if let deck = Session.deck {
+                    
+                    Deck.new(cardForDeck: deck, front: front, back: back)
+                        .then(Card.add)
+                        .then(Deck.insertLocal)
+                        .onError(FlashcardError.processError)
+                        .finally({
+                            self.hideProgress()
+                            self.dismiss(animated: true, completion: nil)
+                        })
+                }
             })
         }
         

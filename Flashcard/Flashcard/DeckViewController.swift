@@ -52,18 +52,19 @@ class DeckViewController: UIViewController, UIGestureRecognizerDelegate {
         
         self.view.addGestureRecognizer(tap)
         
-        if let deck = Session.deck {
-            
-            deck.getRemote()
-                .then(Deck.addLocal)
-                .then(Deck.getRemoteCards)
-                .then(deck.synchronizeLocalCards)
-                .onError(FlashcardError.processError)
-                .finally({
-                    self.shuffledDeck.shuffle()
-                    self.update()
-                })
+        guard let deck = Session.deck else {
+            return
         }
+        
+        deck.getRemote()
+            .then(Deck.addLocal)
+            .then(Deck.getRemoteCards)
+            .then(deck.synchronizeLocalCards)
+            .onError(FlashcardError.processError)
+            .finally({
+                self.shuffledDeck.shuffle()
+                self.update()
+            })
     }
     
     override func viewWillAppear(_ animated: Bool) {

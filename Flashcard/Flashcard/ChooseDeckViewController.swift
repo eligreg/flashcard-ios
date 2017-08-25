@@ -22,7 +22,7 @@ class ChooseDeckViewController: UITableViewController {
         
         // TODO RECOVER STATEMENTS?
         Deck.getAllRemote()
-            .then(Deck.synchronizeLocalDecks)
+            .then(Deck.synchronizeAllLocal)
             .then ({ decks in
                 self.decks = decks
                 self.tableView.reloadData()

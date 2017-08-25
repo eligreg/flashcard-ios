@@ -22,7 +22,7 @@ class Deck: Object, Decodable {
     
     dynamic var id: Int = 0
     dynamic var name: String = ""
-    fileprivate dynamic var n_cards: Int = 0
+    dynamic var n_cards: Int = 0
     var cards = List<Card>()
     
     var cardsCount: Int {

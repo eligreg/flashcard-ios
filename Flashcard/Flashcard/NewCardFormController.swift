@@ -61,7 +61,7 @@ class NewCardFormController: FormViewController {
                 if let deck = Session.deck {
                     
                     deck.newRemoteCard(front: front, back: back)
-                        .then(Card.addUpdateLocal)
+                        .then(Card.addLocal)
                         .then(deck.insertLocal)
                         .onError(FlashcardError.processError)
                         .finally({

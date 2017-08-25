@@ -14,7 +14,7 @@ import RealmSwift
 
 extension Deck {
 
-    static func fetchLocal() -> Promise<[Deck]> {
+    static func fetchAllLocal() -> Promise<[Deck]> {
         return Promise { resolve, reject in
             do {
                 let realm = try Realm()
@@ -27,7 +27,7 @@ extension Deck {
         }
     }
     
-    static func synchronizeLocalDecks(decks: [Deck]) -> Promise<[Deck]> {
+    static func synchronizeAllLocal(decks: [Deck]) -> Promise<[Deck]> {
         return Promise { resolve, reject in
             do {
                 let realm = try Realm()
@@ -57,7 +57,6 @@ extension Deck {
         }
     }
     
-    // TODO REMOVE
     static func addLocal(deck: Deck) -> Promise<Deck> {
         return Promise { resolve, reject in
             do {
@@ -72,7 +71,23 @@ extension Deck {
             resolve(deck)
         }
     }
-    // END REMOVE
+    
+    func updateLocalWith(deck: Deck) -> Promise<Deck> {
+        return Promise { resolve, reject in
+            do {
+                let realm = try Realm()
+                try realm.write {
+                    self.id = deck.id
+                    self.name = deck.name
+                    self.n_cards = deck.n_cards
+                }
+            }
+            catch let error as NSError {
+                reject(error)
+            }
+            resolve(self)
+        }
+    }
     
     func synchronizeLocalCards(cards: [Card]) -> Promise<Void> {
         return Promise { resolve, reject in
@@ -133,21 +148,4 @@ extension Deck {
             resolve()
         }
     }
-    
-    // TODO DELETE
-    static func insertLocal(data: (deck: Deck, card: Card)) -> Promise<Void> {
-        return Promise { resolve, reject in
-            do {
-                let realm = try Realm()
-                try realm.write {
-                    data.deck.cards.append(data.card)
-                }
-            }
-            catch let err as NSError {
-                reject(err)
-            }
-            resolve()
-        }
-    }
-    // END DELETE
 }

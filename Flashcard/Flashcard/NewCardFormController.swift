@@ -60,14 +60,24 @@ class NewCardFormController: FormViewController {
                 
                 if let deck = Session.deck {
                     
-                    Deck.new(cardForDeck: deck, front: front, back: back)
-                        .then(Card.add)
-                        .then(Deck.insertLocal)
+                    deck.newRemoteCard(front: front, back: back)
+                        .then(Card.addUpdateLocal)
+                        .then(deck.insertLocal)
                         .onError(FlashcardError.processError)
                         .finally({
                             self.hideProgress()
                             self.dismiss(animated: true, completion: nil)
                         })
+
+                    
+//                    Deck.new(cardForDeck: deck, front: front, back: back)
+//                        .then(Card.add)
+//                        .then(Deck.insertLocal)
+//                        .onError(FlashcardError.processError)
+//                        .finally({
+//                            self.hideProgress()
+//                            self.dismiss(animated: true, completion: nil)
+//                        })
                 }
             })
         }

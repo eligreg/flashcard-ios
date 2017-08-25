@@ -42,7 +42,7 @@ class Session {
                 resolve(nil)
                 return
             }
-            Deck.get(deck: deck)
+            deck.getRemote()
                 .then(Deck.addLocal)
                 .then ({ deck in
                     self.deck = deck

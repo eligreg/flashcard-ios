@@ -12,6 +12,20 @@ import Gloss
 
 extension DataResponse {
     
+    var resourceIsMissing: Bool {
+        guard let resp = self.response else {
+            return false
+        }
+        return resp.statusCode == 404
+    }
+    
+    var forbidden: Bool {
+        guard let resp = self.response else {
+            return false
+        }
+        return resp.statusCode == 403
+    }
+    
     var json: JSON? {
         get {
             return self.result.value as? JSON
@@ -24,3 +38,4 @@ extension DataResponse {
         }
     }
 }
+

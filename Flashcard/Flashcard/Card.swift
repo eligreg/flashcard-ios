@@ -24,16 +24,20 @@ class Card: Object, Decodable {
     dynamic var back: String = ""
     
     required convenience init?(json: JSON) {
-        
+
         self.init()
+        self.map(json: json)
+    }
+    
+    func map(json: JSON) {
         
         guard
-            let id: Int = keys.id <~~ json,
-            let front: String = keys.front <~~ json,
-            let back: String = keys.back <~~ json
-            
-            else {
-                return nil
+        let id: Int = keys.id <~~ json,
+        let front: String = keys.front <~~ json,
+        let back: String = keys.back <~~ json
+        
+        else {
+            return
         }
         
         self.id = id

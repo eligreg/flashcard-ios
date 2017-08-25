@@ -21,6 +21,7 @@ public enum Routes: URLRequestConvertible {
     case deck(id: Int)
     case decksCards(id: Int)
     case decksUpdate(id: Int, name: String)
+    case card(id: Int)
     case cardsNew(deck_id: Int, front: String, back: String)
     case cardsUpdate(id: Int, front: String, back: String)
     case cardsDelete(id: Int)
@@ -37,6 +38,7 @@ public enum Routes: URLRequestConvertible {
         case .deck(let id): return decks + "/\(id)"
         case .decksCards(let id): return decks + "/\(id)" + cards
         case .decksUpdate(let id, _): return decks + "/\(id)"
+        case .card(let id): return cards + "/\(id)"
         case .cardsNew(_,_,_): return cards
         case .cardsUpdate(let id,_,_): return cards + "/\(id)"
         case .cardsDelete(let id): return cards + "/\(id)"
@@ -50,6 +52,7 @@ public enum Routes: URLRequestConvertible {
         case .deck(_): return .get
         case .decksCards(_): return .get
         case .decksNew(_): return .post
+        case .card(_): return .get
         case .cardsNew(_,_,_): return .post
         case .decksUpdate(_,_): return .patch
         case .cardsUpdate(_,_,_): return .patch

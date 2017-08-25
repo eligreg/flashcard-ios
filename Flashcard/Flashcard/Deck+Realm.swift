@@ -57,6 +57,7 @@ extension Deck {
         }
     }
     
+    // TODO REMOVE
     static func addLocal(deck: Deck) -> Promise<Deck> {
         return Promise { resolve, reject in
             do {
@@ -71,20 +72,21 @@ extension Deck {
             resolve(deck)
         }
     }
+    // END REMOVE
     
-    static func synchronizeLocalCards(data: (deck: Deck, cards: [Card])) -> Promise<Void> {
+    func synchronizeLocalCards(cards: [Card]) -> Promise<Void> {
         return Promise { resolve, reject in
             do {
                 let realm = try Realm()
                 var cardIds = Set<Int>()
-                if let deck = realm.object(ofType: Deck.self, forPrimaryKey: data.deck.id) {
+                if let deck = realm.object(ofType: Deck.self, forPrimaryKey: self.id) {
                     cardIds = Set(deck.cards.map({ $0.id }))
                 }
                 try realm.write {
-                    for card in data.cards {
-                        realm.add(data.cards, update: true)
-                        if !data.deck.cards.contains(card) {
-                            data.deck.cards.append(card)
+                    for card in cards {
+                        realm.add(cards, update: true)
+                        if !self.cards.contains(card) {
+                            self.cards.append(card)
                         }
                         if cardIds.contains(card.id) {
                             cardIds.remove(card.id)
@@ -95,12 +97,12 @@ extension Deck {
                     })
                     var removalIndexes = [Int]()
                     for (index, card) in unwanted.enumerated() {
-                        if data.deck.cards.contains(card) {
+                        if self.cards.contains(card) {
                             removalIndexes.append(index)
                         }
                     }
                     for index in removalIndexes {
-                        data.deck.cards.remove(objectAtIndex: index)
+                        self.cards.remove(objectAtIndex: index)
                     }
                     if let sessionDeck = Session.deck {
                         if removalIndexes.contains(sessionDeck.id) {
@@ -117,7 +119,22 @@ extension Deck {
         }
     }
     
+    func insertLocal(card: Card) -> Promise<Void> {
+        return Promise { resolve, reject in
+            do {
+                let realm = try Realm()
+                try realm.write {
+                    self.cards.append(card)
+                }
+            }
+            catch let err as NSError {
+                reject(err)
+            }
+            resolve()
+        }
+    }
     
+    // TODO DELETE
     static func insertLocal(data: (deck: Deck, card: Card)) -> Promise<Void> {
         return Promise { resolve, reject in
             do {
@@ -132,4 +149,5 @@ extension Deck {
             resolve()
         }
     }
+    // END DELETE
 }

@@ -16,7 +16,7 @@ import RealmSwift
 
 extension Deck {
     
-    static func get() -> Promise<[Deck]> {
+    static func getAllRemote() -> Promise<[Deck]> {
         return Promise { resolve, reject in
             Alamofire.request(Routes.decksList())
                 .responseJSON { (response: DataResponse<Any>) in
@@ -38,7 +38,19 @@ extension Deck {
         }
     }
     
-    static func get(deck: Deck) -> Promise<Deck> {
+    func getRemote() -> Promise<Deck> {
+        return Promise { resolve, reject in
+            Deck.getRemote(deck: self)
+                .then ({ deck in
+                    resolve(deck)
+                })
+                .onError ({ err in
+                    reject(err)
+                })
+        }
+    }
+    
+    static func getRemote(deck: Deck) -> Promise<Deck> {
         return Promise { resolve, reject in
             Alamofire.request(Routes.deck(id: deck.id))
                 .responseJSON(completionHandler: { (response: DataResponse<Any>) in
@@ -46,12 +58,12 @@ extension Deck {
                         reject(err)
                         return
                     }
-                    guard let json = response.json else {
-                        reject(FlashcardError.invalidJSON)
+                    guard !response.resourceIsMissing else {
+                        reject(FlashcardError.deckMissing)
                         return
                     }
-                    if let message = json.errorMessage {
-                        reject(FlashcardError.deckResponse(msg: message))
+                    guard let json = response.json else {
+                        reject(FlashcardError.invalidJSON)
                         return
                     }
                     guard let deck = Deck(json: json) else {
@@ -59,7 +71,7 @@ extension Deck {
                         return
                     }
                     resolve(deck)
-            })
+                })
         }
     }
     
@@ -71,12 +83,17 @@ extension Deck {
                         reject(err)
                         return
                     }
+                    guard !response.resourceIsMissing else {
+                        reject(FlashcardError.deckMissing)
+                        return
+                    }
                     guard let json = response.json else {
                         reject(FlashcardError.invalidJSON)
                         return
                     }
-                    if let message = json.errorMessage {
-                        reject(FlashcardError.deckResponse(msg: message))
+                    guard !response.forbidden else {
+                        let reason = json.errorMessage ?? "Unknown Error!"
+                        reject(FlashcardError.deckResponse(msg: reason))
                         return
                     }
                     guard let deck = Deck(json: json) else {
@@ -87,45 +104,47 @@ extension Deck {
                 })
         }
     }
-        
-    static func getCards(forDeck: Deck) -> Promise<(Deck,[Card])> {
+    
+    func getRemoteCards() -> Promise<([Card])> {
         return Promise { resolve, reject in
-            Alamofire.request(Routes.decksCards(id: forDeck.id))
+            Deck.getRemoteCards(deck: self)
+                .then ({ cards in
+                    resolve(cards)
+                })
+                .onError({ err in
+                    reject(err)
+                })
+        }
+    }
+    
+    static func getRemoteCards(deck: Deck) -> Promise<[Card]> {
+        return Promise { resolve, reject in
+            Alamofire.request(Routes.decksCards(id: deck.id))
                 .responseJSON { (response: DataResponse<Any>) in
                     if let err = response.result.error {
                         reject(err)
                         return
                     }
-                    guard let resp = response.response, resp.statusCode == 200 else {
-                        print(response.response!.statusCode)
-                        if let resp = response.response, (resp.statusCode == 404 || resp.statusCode == 403) {
-                            if let deck = Session.deck {
-                                do {
-                                    let realm = try Realm()
-                                    try realm.write {
-                                        realm.delete(deck)
-                                    }
-                                }
-                                catch let err as NSError {
-                                    reject(err)
-                                }
-                            }
-                            reject(FlashcardError.deckMissing)
-                        }
-                        else {
-                            reject(FlashcardError.serverError)
-                        }
+                    guard !response.resourceIsMissing else {
+                        reject(FlashcardError.deckMissing)
                         return
                     }
-                    guard let json = response.jsonArray else {
+                    guard let jsonArray = response.jsonArray else {
+                        if let json = response.json {
+                            let reason = json.errorMessage ?? "Unknown Error!"
+                            reject(FlashcardError.deckResponse(msg: reason))
+                        }
                         reject(FlashcardError.invalidJSON)
                         return
                     }
-                    guard let cards = [Card].from(jsonArray: json) else {
+                    guard !response.forbidden else {
+                        return
+                    }
+                    guard let cards = [Card].from(jsonArray: jsonArray) else {
                         reject(FlashcardError.cardJSONDecode)
                         return
                     }
-                    resolve((forDeck, cards))
+                    resolve(cards)
             }
         }
     }
@@ -153,6 +172,10 @@ extension Deck {
                     resolve(deck)
                 })
         }
+    }
+    
+    func newRemoteCard(front: String, back: String) -> Promise<Card> {
+        return Card.newRemoteFor(deck: self, front: front, back: back)
     }
     
     static func new(cardForDeck deck: Deck, front:String, back:String) -> Promise<(Deck,Card)> {

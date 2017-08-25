@@ -19,7 +19,7 @@ class DeckViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var newButton: UIButton!
     @IBOutlet weak var settingsButton: UIButton!
     
-    var shuffledDeck: ShuffledDeck?
+    var shuffledDeck = ShuffledDeck()
     
     var showBack: Bool = false {
         didSet {
@@ -51,20 +51,16 @@ class DeckViewController: UIViewController, UIGestureRecognizerDelegate {
                                          action: #selector(DeckViewController.tap))
         
         self.view.addGestureRecognizer(tap)
-
-        shuffledDeck = ShuffledDeck()
         
         if let deck = Session.deck {
             
-            Deck.get(deck: deck)
-                .retry(2)
+            deck.getRemote()
                 .then(Deck.addLocal)
-                .then(Deck.getCards)
-                .retry(2)
-                .then(Deck.synchronizeLocalCards)
+                .then(Deck.getRemoteCards)
+                .then(deck.synchronizeLocalCards)
                 .onError(FlashcardError.processError)
                 .finally({
-                    self.shuffledDeck?.shuffle()
+                    self.shuffledDeck.shuffle()
                     self.update()
                 })
         }
@@ -73,7 +69,7 @@ class DeckViewController: UIViewController, UIGestureRecognizerDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.shuffledDeck?.shuffle()
+        self.shuffledDeck.shuffle()
         self.update()
     }
     
@@ -91,10 +87,10 @@ class DeckViewController: UIViewController, UIGestureRecognizerDelegate {
         }) { (completion: Bool) in
             
             if sender.direction == .left {
-                _ = self.shuffledDeck?.previous()
+                _ = self.shuffledDeck.previous()
             }
             else if sender.direction == .right {
-                _ = self.shuffledDeck?.next()
+                _ = self.shuffledDeck.next()
             }
             self.frontLabel.alpha = 1.0
             self.backLabel.alpha = 1.0
@@ -104,7 +100,7 @@ class DeckViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     func hold(_ sender: UILongPressGestureRecognizer) {
-        guard self.shuffledDeck?.top != nil else {
+        guard self.shuffledDeck.top != nil else {
             return
         }
         showBack = true
@@ -115,17 +111,15 @@ class DeckViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     func update() {
-        weak var card = self.shuffledDeck?.top
+        weak var card = self.shuffledDeck.top
         frontLabel.text = card != nil ? card!.front : ""
         backLabel.text = card != nil ? card!.back  : ""
-        deckLabel.text = shuffledDeck?.deck != nil ? shuffledDeck!.status : "(No Deck Selected)"
-        newButton.isEnabled = self.shuffledDeck?.deck != nil
+        deckLabel.text = shuffledDeck.deck != nil ? shuffledDeck.status : "(No Deck Selected)"
+        newButton.isEnabled = self.shuffledDeck.deck != nil
     }
     
     @IBAction func returnToRootTableViewController(_ sender: UIButton) {
-        self.dismiss(animated: true) { 
-            self.shuffledDeck = nil
-        }
+        self.dismiss(animated: true)
     }
 
     override func didReceiveMemoryWarning() {

@@ -20,7 +20,8 @@ class ChooseDeckViewController: UITableViewController {
         
         self.showProgress()
         
-        Deck.get()
+        // TODO RECOVER STATEMENTS?
+        Deck.getAllRemote()
             .then(Deck.synchronizeLocalDecks)
             .then ({ decks in
                 self.decks = decks

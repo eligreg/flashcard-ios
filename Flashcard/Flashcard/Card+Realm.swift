@@ -14,27 +14,27 @@ import RealmSwift
 
 extension Card {
     
-    static func add(data: (deck: Deck, card: Card)) -> Promise<(Deck,Card)> {
+    static func addUpdateLocal(card: Card) -> Promise<Card> {
         return Promise { resolve, reject in
             do {
                 let realm = try Realm()
                 try realm.write {
-                    realm.add(data.card, update: true)
+                    realm.add(card, update: true)
                 }
             }
             catch let error as NSError {
                 reject(error)
             }
-            resolve(data)
+            resolve(card)
         }
     }
     
-    static func delete(card: Card) -> Promise<Void> {
+    func deleteLocal() -> Promise<Void> {
         return Promise { resolve, reject in
             do {
                 let realm = try Realm()
                 try realm.write {
-                    realm.delete(card)
+                    realm.delete(self)
                 }
             }
             catch let error as NSError {

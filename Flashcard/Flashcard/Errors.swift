@@ -116,7 +116,8 @@ enum FlashcardError: Error {
     }
     
     static func processError(err: Error) {
-        StatusBar.display(message: err.localizedDescription)
+        let message = (err is FlashcardError) ? (err as! FlashcardError).message : err.localizedDescription
+        StatusBar.display(message: message)
         FlashcardError.log(error: err)
     }
 }

@@ -49,7 +49,6 @@ class NewDeckFormController: FormViewController {
                 self.showProgress()
                 
                 Deck.new(deck: name)
-                    .retry(3)
                     .then(Deck.addLocal)
                     .then({ deck  in
                         Session.deck = deck
